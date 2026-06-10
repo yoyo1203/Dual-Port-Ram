@@ -1,8 +1,8 @@
 # Tiny Tapeout project information
 project:
   title:        "Dual Port RAM"
-  author:       "Your Name"
-  discord:      "your_discord"      # optional
+  author:       "Veda Mouktika Boddanapalli"
+  discord:      "yoyo1203"      # optional
   description:  "8-bit 256-word dual-port RAM with arbitration and collision detect"
   language:     "SystemVerilog"
   clock_hz:     50000000            # 50 MHz — adjust to what you test at
