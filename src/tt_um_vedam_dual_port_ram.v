@@ -32,22 +32,27 @@ module tt_um_vedam_dual_port_ram (
     wire       grant_b;
     wire       collision;
 
-    wire [7:0] porta_ad;
-    wire [7:0] portb_ad;
+    wire [7:0] porta_dout;
+    wire [7:0] portb_dout;
+    wire       porta_dout_en;
+    wire       portb_dout_en;
 
-    // 16x8 for 1x2 tile — 256x8 is too large for Tiny Tapeout
     dual_port_ram_top #(
         .ADDR_WIDTH (4),
         .MEM_DEPTH  (16)
     ) u_ram (
         .clk             (clk),
         .rst_n           (rst_n),
-        .porta_ad        (porta_ad),
+        .porta_din       (uio_in),
+        .porta_dout      (porta_dout),
+        .porta_dout_en   (porta_dout_en),
         .porta_ale_n     (porta_ale_n),
         .porta_rd_n      (porta_rd_n),
         .porta_wr_n      (porta_wr_n),
         .porta_cs_n      (porta_cs_n),
-        .portb_ad        (portb_ad),
+        .portb_din       (uio_in),
+        .portb_dout      (portb_dout),
+        .portb_dout_en   (portb_dout_en),
         .portb_ale_n     (portb_ale_n),
         .portb_rd_n      (portb_rd_n),
         .portb_wr_n      (portb_wr_n),
@@ -59,17 +64,10 @@ module tt_um_vedam_dual_port_ram (
         .retention_mode  (retention_mode)
     );
 
-    wire bus_active_a = ~port_sel & ~porta_cs_n;
-    wire bus_active_b =  port_sel & ~portb_cs_n;
-    wire bus_read_a   = bus_active_a & ~porta_rd_n;
-    wire bus_read_b   = bus_active_b & ~portb_rd_n;
-    wire drive_in_a   = bus_active_a & porta_rd_n;
-    wire drive_in_b   = bus_active_b & portb_rd_n;
+    wire bus_read_a = ~port_sel & porta_dout_en;
+    wire bus_read_b =  port_sel & portb_dout_en;
 
-    assign porta_ad = drive_in_a ? uio_in : 8'bz;
-    assign portb_ad = drive_in_b ? uio_in : 8'bz;
-
-    assign uio_out = bus_read_a ? porta_ad : bus_read_b ? portb_ad : 8'b0;
+    assign uio_out = bus_read_a ? porta_dout : bus_read_b ? portb_dout : 8'b0;
     assign uio_oe  = {8{(bus_read_a | bus_read_b)}};
 
     assign uo_out[0]   = collision;
@@ -77,6 +75,6 @@ module tt_um_vedam_dual_port_ram (
     assign uo_out[2]   = grant_b;
     assign uo_out[7:3] = 5'b0;
 
-    wire _unused = ena;
+    wire _unused = ena | ui_in[7];
 
 endmodule
