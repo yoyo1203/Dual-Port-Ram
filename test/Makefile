@@ -6,7 +6,10 @@ SIM ?= icarus
 FST ?= -fst # Use more efficient FST format
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = project.v
+PROJECT_SOURCES = \
+    ../src/tt_um_yourgithubuser_dual_port_ram.v \
+    ../src/dual_port_ram_top.sv \
+    ../src/clock_gating.sv
 
 ifneq ($(GATES),yes)
 
