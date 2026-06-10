@@ -7,15 +7,16 @@ FST ?= -fst # Use more efficient FST format
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = \
-    ../src/tt_um_vedam_dual_port_ram.v \
-    ../src/dual_port_ram_top.sv \
-    ../src/clock_gating.sv
+    tt_um_vedam_dual_port_ram.v \
+    dual_port_ram_top.sv \
+    clock_gating.sv
 
 ifneq ($(GATES),yes)
 
 # RTL simulation:
-SIM_BUILD				= sim_build/rtl
+SIM_BUILD = sim_build/rtl
 VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
+COMPILE_ARGS += -g2012
 
 else
 

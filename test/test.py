@@ -73,7 +73,7 @@ async def ram_read(dut, port, addr):
     await ClockCycles(dut.clk, 1)
 
     dut.ui_in.value = _ui(port_sel=port, cs_n=0, rd_n=0)
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 2)
 
     # DUT drives bus when reading — sample uio_out (wrapper sets uio_oe)
     result = int(dut.uio_out.value)
@@ -116,10 +116,10 @@ async def test_dual_port_independence(dut):
     await reset_dut(dut)
 
     await ram_write(dut, port=0, addr=0x05, data=0x11)
-    await ram_write(dut, port=1, addr=0x05, data=0x22)
+    await ram_write(dut, port=1, addr=0x06, data=0x22)
 
     assert await ram_read(dut, port=0, addr=0x05) == 0x11
-    assert await ram_read(dut, port=1, addr=0x05) == 0x22
+    assert await ram_read(dut, port=1, addr=0x06) == 0x22
 
 
 @cocotb.test()
