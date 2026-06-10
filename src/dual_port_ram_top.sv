@@ -50,6 +50,8 @@ module dual_port_ram_top #(
     assign data_a_in = porta_din;
     assign data_b_in = portb_din;
 
+    wire _unused_retention = retention_mode;
+
     clock_gating u_clock_gating (
         .clk_in      (clk),
         .clk_en      (clk_enable),
@@ -97,18 +99,13 @@ module dual_port_ram_top #(
     assign portb_dout    = data_b_out;
     assign portb_dout_en = !portb_cs_n && !portb_rd_n && arb_grant_b;
 
-    always_ff @(posedge clk_gated or negedge rst_n) begin
+    // Sync reset only for memory — Yosys requires constant async reset values
+    always_ff @(posedge clk_gated) begin
         if (!rst_n) begin
             data_a_out <= '0;
             data_b_out <= '0;
-            if (retention_mode) begin
-                for (int i = 0; i < MEM_DEPTH; i++) begin
-                    mem_array[i] <= '1;
-                end
-            end else begin
-                for (int i = 0; i < MEM_DEPTH; i++) begin
-                    mem_array[i] <= '0;
-                end
+            for (int i = 0; i < MEM_DEPTH; i++) begin
+                mem_array[i] <= '0;
             end
         end else begin
             if (arb_grant_a && !porta_cs_n) begin
