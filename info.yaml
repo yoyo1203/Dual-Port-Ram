@@ -9,10 +9,10 @@ project:
 
   tiles: "1x1"
 
-  top_module:  "tt_um_yourgithubuser_dual_port_ram"
+  top_module:  "tt_um_vedam_dual_port_ram"
 
   source_files:
-    - "tt_um_yourgithubuser_dual_port_ram.v"
+    - "tt_um_vedam_dual_port_ram.v"
     - "dual_port_ram_top.sv"
     - "clock_gating.sv"
 
