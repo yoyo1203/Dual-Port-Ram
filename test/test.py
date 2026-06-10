@@ -89,8 +89,8 @@ async def test_port_a_write_read(dut):
     cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
     await reset_dut(dut)
 
-    await ram_write(dut, port=0, addr=0x10, data=0xAB)
-    data = await ram_read(dut, port=0, addr=0x10)
+    await ram_write(dut, port=0, addr=0x0A, data=0xAB)
+    data = await ram_read(dut, port=0, addr=0x0A)
 
     assert data == 0xAB, f"Port A read mismatch: got 0x{data:02x}, expected 0xAB"
 
@@ -102,8 +102,8 @@ async def test_port_b_write_read(dut):
     cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
     await reset_dut(dut)
 
-    await ram_write(dut, port=1, addr=0x20, data=0xCD)
-    data = await ram_read(dut, port=1, addr=0x20)
+    await ram_write(dut, port=1, addr=0x0B, data=0xCD)
+    data = await ram_read(dut, port=1, addr=0x0B)
 
     assert data == 0xCD, f"Port B read mismatch: got 0x{data:02x}, expected 0xCD"
 

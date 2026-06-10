@@ -1,6 +1,6 @@
 ## How it works
 
-This design is an 8-bit, 256-word dual-port RAM with arbitration and write-collision detection.
+This design is an 8-bit, 16-word dual-port RAM with arbitration and write-collision detection (sized for Tiny Tapeout tile budget).
 
 The Tiny Tapeout top module (`tt_um_vedam_dual_port_ram`) connects the chip's 24 user pins to the internal `dual_port_ram_top` core using a shared multiplexed bus:
 

@@ -35,7 +35,11 @@ module tt_um_vedam_dual_port_ram (
     wire [7:0] porta_ad;
     wire [7:0] portb_ad;
 
-    dual_port_ram_top u_ram (
+    // 16x8 for 1x2 tile — 256x8 is too large for Tiny Tapeout
+    dual_port_ram_top #(
+        .ADDR_WIDTH (4),
+        .MEM_DEPTH  (16)
+    ) u_ram (
         .clk             (clk),
         .rst_n           (rst_n),
         .porta_ad        (porta_ad),
