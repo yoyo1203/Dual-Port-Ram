@@ -7,7 +7,7 @@ FST ?= -fst # Use more efficient FST format
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = \
-    ../src/tt_um_yourgithubuser_dual_port_ram.v \
+    ../src/tt_um_vedam_dual_port_ram.v \
     ../src/dual_port_ram_top.sv \
     ../src/clock_gating.sv
 
