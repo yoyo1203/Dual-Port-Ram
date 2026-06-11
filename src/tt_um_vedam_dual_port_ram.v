@@ -37,9 +37,10 @@ module tt_um_vedam_dual_port_ram (
     wire       porta_dout_en;
     wire       portb_dout_en;
 
+    // 18x8 on 1x1 tile targets ~65-70% area utilisation (was ~29% on 1x2/16x8)
     dual_port_ram_top #(
-        .ADDR_WIDTH (4),
-        .MEM_DEPTH  (16)
+        .ADDR_WIDTH (5),
+        .MEM_DEPTH  (18)
     ) u_ram (
         .clk             (clk),
         .rst_n           (rst_n),
