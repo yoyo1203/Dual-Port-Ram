@@ -37,10 +37,10 @@ module tt_um_vedam_dual_port_ram (
     wire       porta_dout_en;
     wire       portb_dout_en;
 
-    // 36x8 on 1x2 tile targets ~65% area util (16x8 was ~29% on same tile size)
+    // 32x8 on 1x2 — ~60% util; 36x8 failed detailed placement (DPL-0036)
     dual_port_ram_top #(
-        .ADDR_WIDTH (6),
-        .MEM_DEPTH  (36)
+        .ADDR_WIDTH (5),
+        .MEM_DEPTH  (32)
     ) u_ram (
         .clk             (clk),
         .rst_n           (rst_n),
